@@ -1,4 +1,4 @@
-FROM ghcr.io/arvatoaws-labs/ubuntu:20.04 as sessionmanagerplugin
+FROM ghcr.io/arvatoaws-labs/ubuntu:20.10 as sessionmanagerplugin
 
 ENV DEBIAN_FRONTEND noninteractive
 
