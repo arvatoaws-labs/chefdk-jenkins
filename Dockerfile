@@ -5,3 +5,4 @@ RUN rm -rf ~/.ssh/known_hosts
 RUN mkdir ~/.ssh
 RUN ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
 RUN gem install bundler
+ADD ssh_config ~/.ssh/config
