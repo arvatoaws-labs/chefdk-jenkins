@@ -1,9 +1,11 @@
 FROM ghcr.io/arvatoaws-labs/ubuntu:20.04 as sessionmanagerplugin
 
-RUN apt-get update \
-    && apt-get install -y curl \
-    && curl -Lo "session-manager-plugin.deb" "https://s3.amazonaws.com/session-manager-downloads/plugin/latest/ubuntu_$(if [[ $(uname -m) == 'aarch64' ]]; then echo 'arm64'; else echo '64bit'; fi)/session-manager-plugin.deb" \
-    && dpkg -i "session-manager-plugin.deb"
+ENV DEBIAN_FRONTEND noninteractive
+
+RUN apt-get update
+RUN apt-get install -y curl
+RUN bash -c 'curl -Lo "session-manager-plugin.deb" "https://s3.amazonaws.com/session-manager-downloads/plugin/latest/ubuntu_$(if [[ $(uname -m) == \'aarch64\' ]]; then echo \'arm64\'; else echo \'64bit\'; fi)/session-manager-plugin.deb"'
+RUN dpkg -i "session-manager-plugin.deb"
 
 FROM ghcr.io/arvatoaws-labs/ruby:3-alpine
 
