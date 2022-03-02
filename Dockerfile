@@ -10,7 +10,7 @@ RUN dpkg -i "session-manager-plugin.deb"
 
 FROM ghcr.io/arvatoaws-labs/ruby:3-alpine
 
-COPY --from=sessionmanagerplugin /usr/local/sessionmanagerplugin/bin/session-manager-plugin /usr/local/bin/
+COPY --from=sessionmanagerplugin /usr/local/sessionmanagerplugin/bin/session-manager-plugin /usr/bin/
 RUN apk add git aws-cli bash alpine-sdk openssh-client
 RUN rm -rf /root/.ssh/known_hosts
 RUN mkdir /root/.ssh
