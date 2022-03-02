@@ -1,4 +1,4 @@
-FROM golang:1.15.3-alpine as ssm-builder
+FROM golang:1.17.7-alpine as ssm-builder
 
 ARG VERSION=1.2.279.0
 
