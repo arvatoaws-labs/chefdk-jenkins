@@ -1,4 +1,4 @@
-FROM public.ecr.aws/bitnami/ruby:latest
+FROM public.ecr.aws/bitnami/ruby:3.0
 
 ENV DEBIAN_FRONTEND noninteractive
 
