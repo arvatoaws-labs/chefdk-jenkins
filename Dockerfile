@@ -1,4 +1,4 @@
-FROM public.ecr.aws/bitnami/ruby:3.1
+FROM public.ecr.aws/bitnami/ruby:2.6.9-debian-10-r89
 
 ENV DEBIAN_FRONTEND noninteractive
 
