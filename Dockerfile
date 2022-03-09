@@ -8,3 +8,4 @@ RUN rm -rf /root/.ssh/known_hosts
 RUN mkdir /root/.ssh
 RUN ssh-keyscan -t rsa github.com >> /root/.ssh/known_hosts
 RUN gem install bundler
+ADD construct.rb /usr/bin
