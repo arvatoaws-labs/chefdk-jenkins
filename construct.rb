@@ -94,29 +94,29 @@ Dir.glob('environments/*.json') do |e|
       end
       `find cookbooks | grep "/test/integration/" | xargs rm -fr`
       `rsync -av ../../environments .`
-      # if File.exist?('../../.chef/encrypted_data_bag_secret')
-      #   Dir.glob('../../data_bags/*/*.json') do |data_bag_plain|
-      #     dbp_segments = data_bag_plain.split('/')
-      #     FileUtils.mkdir_p(dbp_segments[2..-2].join('/'))
-      #     new_file = dbp_segments[2..-1].join('/')
-      #     if in_place[new_file]
-      #       FileUtils.cp(data_bag_plain, new_file)
-      #     else
+      if File.exist?('../../.chef/encrypted_data_bag_secret')
+        Dir.glob('../../data_bags/*/*.json') do |data_bag_plain|
+          dbp_segments = data_bag_plain.split('/')
+          FileUtils.mkdir_p(dbp_segments[2..-2].join('/'))
+          new_file = dbp_segments[2..-1].join('/')
+          if in_place[new_file]
+            FileUtils.cp(data_bag_plain, new_file)
+          else
 			# 			# system("cat", data_bag_plain, out: $stdout, err: :out)
-      #       puts "Encrypting #{data_bag_plain}"
-      #       `knife data bag from file #{dbp_segments[3]} #{data_bag_plain} -z --secret-file ../../.chef/encrypted_data_bag_secret`
-      #       puts "Encryption done"
-      #       unless File.exist?(new_file)
-      #         in_place[new_file] = true
-      #         FileUtils.cp(data_bag_plain, new_file)
-      #       end
-			# 			# system("cat", new_file, out: $stdout, err: :out)
-      #     end
-      #   end
-      # else
-      #   raise("encrypted_data_bag_secret is missing")
-      #   # `rsync -av ../../data_bags .` if Dir.exist?('../../data_bags')
-      # end
+            puts "Encrypting #{data_bag_plain}"
+            `knife data bag from file #{dbp_segments[3]} #{data_bag_plain} -z --secret-file ../../.chef/encrypted_data_bag_secret`
+            puts "Encryption done"
+            unless File.exist?(new_file)
+              in_place[new_file] = true
+              FileUtils.cp(data_bag_plain, new_file)
+            end
+	# 			# system("cat", new_file, out: $stdout, err: :out)
+          end
+        end
+      else
+        raise("encrypted_data_bag_secret is missing")
+        # `rsync -av ../../data_bags .` if Dir.exist?('../../data_bags')
+      end
       `rsync -av ../../roles .` if Dir.exist?('../../roles')
       `rsync -av ../../nodes .` if Dir.exist?('../../nodes')
       Dir.glob('../../site-cookbooks/*') do |site_cookbook|
